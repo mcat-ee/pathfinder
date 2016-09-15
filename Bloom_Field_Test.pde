@@ -129,9 +129,11 @@ class Edge {
   }
   
   void draw() {
+    strokeWeight(1);
     line(start.x,start.y,finish.x,finish.y);
   }
 }
+
 
 class Mesh {
   ArrayList<PVector> points;
@@ -156,6 +158,7 @@ class Mesh {
   
   void draw() {
     this.draw_edges();
+    this.draw_midpoint();
   }
   
   void draw_edges() {
@@ -166,14 +169,30 @@ class Mesh {
   
   }
   void calculate_midpoint() {
+     PVector average = new PVector();
+     for(int i = 0 ; i < this.points.size() ; i++) {
+       PVector current = this.points.get(i);
+       average.x += current.x;
+       average.y += current.y;
+     }
+     average.x /= this.points.size();
+     average.y /= this.points.size();
+     println(average.x + " - " + average.y);
+     this.midpoint = average;
+  }
+  
+  void triangle_form(PVector p1, PVector p2, PVector p3) {
     //TODO
   }
+  
   void draw_midpoint() {
     //TODO
     if(this.midpoint == null )
     {
       this.calculate_midpoint();
     }
+    strokeWeight(3);
+    point(this.midpoint.x, this.midpoint.y);
   }
   
 }
