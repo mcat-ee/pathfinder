@@ -13,6 +13,7 @@ void setup() {
   //Line 3
   PVector p5 = new PVector(10,10);
   PVector p6 = new PVector(10,20);
+  noLoop();
 
   if (doLinesIntersect(p1, p2, p3, p4)) {
     println("Intersects!\n\n");
@@ -28,7 +29,6 @@ void setup() {
     return;
   }
   print("Non");
-  noLoop();
 }
 
 boolean doLinesIntersect(PVector p1, PVector p2, PVector p3, PVector p4) {
@@ -183,6 +183,16 @@ class Mesh {
   
   void triangle_form(PVector p1, PVector p2, PVector p3) {
     //TODO
+  }
+  
+  void bloom() {
+    int cellSize = 20;
+    
+  }
+  
+  void drawCell(PVector origin, int cellSize) {
+    //Origin acts as bottom left hand corner
+    line(origin.x, origin.y, origin.x,origin.y + cellSize);
   }
   
   void draw_midpoint() {
