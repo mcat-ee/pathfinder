@@ -137,10 +137,14 @@ class Edge {
 
 class Mesh {
   ArrayList<PVector> points;
-  PVector midpoint = null;
+  PVector midpoint;
+  ArrayList<Mesh> neighbours;
+  ArrayList<PVector> bounding_box_points;
   
   ArrayList<Edge> edges;
   Mesh() {
+    this.neighbours = new ArrayList<Mesh>();
+    this.bounding_box_points = new ArrayList<PVector>();
     this.points = new ArrayList<PVector>();
     this.edges = new ArrayList<Edge>();
   }
@@ -230,7 +234,13 @@ class Mesh {
     }
           //Now actually build the bounding box
 
-    line(minX-tolerance,minY-tolerance,maxX+tolerance,minY-tolerance);
+      this.bounding_box_points.add(new PVector(minX-tolerance,minY-tolerance));
+      this.bounding_box_points.add(new PVector(maxX+tolerance,minY-tolerance));
+      this.bounding_box_points.add(new PVector(maxX+tolerance, maxY+tolerance));
+      this.bounding_box_points.add(new PVector(minX-tolerance,maxY+tolerance));
+
+      
+      line(minX-tolerance,minY-tolerance,maxX+tolerance,minY-tolerance);
       line(maxX+tolerance,minY-tolerance, maxX+tolerance, maxY+tolerance);
       line(maxX+tolerance,maxY+tolerance, minX-tolerance,maxY+tolerance);
       line(minX-tolerance,maxY+tolerance, minX-tolerance, minY-tolerance);
