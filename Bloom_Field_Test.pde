@@ -186,13 +186,62 @@ class Mesh {
   }
   
   void bloom() {
-    int cellSize = 20;
-    
+    int cellSize = -20;
+    strokeWeight(1);
+    stroke(255,0,0);
+    this.drawCell(this.midpoint, cellSize,0,0);
   }
   
-  void drawCell(PVector origin, int cellSize) {
+  void drawEnclosingRectangle(int tolerance) {
+    //TODO
+    stroke(0,255,0);
+    
+    float maxX = MIN_INT; float minX = MAX_INT;
+    float maxY = MIN_INT; float minY = MAX_INT;
+    
+    for(int i = 0 ; i < this.points.size() ; i++ ) {
+      PVector p = this.points.get(i);
+      
+      //Figure out boundary
+      if (p.x < minX) {
+        minX = p.x;
+      }
+      if (p.x > maxX) {
+        maxX = p.x;
+      }
+      
+      if (p.y < minY) {
+        minY = p.y;
+      }
+      if (p.y > maxY) {
+        maxY = p.y;
+      }
+      
+      
+      /*
+      This looks v cool but remove
+      line(minX-tolerance,minY-tolerance,maxX+tolerance,minY-tolerance);
+      line(maxX+tolerance,minY-tolerance, maxX+tolerance, maxY+tolerance);
+      line(maxX+tolerance,maxY+tolerance, minX-tolerance,maxY+tolerance);
+      line(minX-tolerance,maxY+tolerance, minX-tolerance, minY-tolerance);
+      
+      */
+      
+    }
+          //Now actually build the bounding box
+
+    line(minX-tolerance,minY-tolerance,maxX+tolerance,minY-tolerance);
+      line(maxX+tolerance,minY-tolerance, maxX+tolerance, maxY+tolerance);
+      line(maxX+tolerance,maxY+tolerance, minX-tolerance,maxY+tolerance);
+      line(minX-tolerance,maxY+tolerance, minX-tolerance, minY-tolerance);
+  }
+  
+  void drawCell(PVector origin, int cellSize,int xOffset, int yOffset) {
     //Origin acts as bottom left hand corner
     line(origin.x, origin.y, origin.x,origin.y + cellSize);
+    line(origin.x, origin.y, origin.x + cellSize,origin.y);
+    line(origin.x + cellSize, origin.y, origin.x + cellSize,origin.y + cellSize);
+    line(origin.x, origin.y + cellSize, origin.x + cellSize,origin.y + cellSize);
   }
   
   void draw_midpoint() {
@@ -214,6 +263,6 @@ void draw() {
   testMesh.add_edge_from_points(new PVector(250,450),new PVector(250,250));
   
   testMesh.draw();
-  
-  
+  testMesh.bloom();
+  testMesh.drawEnclosingRectangle(10);
 }
