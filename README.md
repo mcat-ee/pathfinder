@@ -1,12 +1,27 @@
 # pathfinder
 A hierarchical pathfinding system combining multiple levels of A*, navmesh navigation, and potential fields.
-Currently this repo contains my progress towards a proof of concept implemented in Processing (due to ease of visualisation). Javascript and pseudocode implementations will be available once the Processing version is up to my standard.
+
+This repo contains my progress towards a proof of concept implemented in Processing (due to ease of visualisation). Javascript and pseudocode implementations will be available once the Processing version is up to my standard.
 
 # related work
 - [Clearance-based Pathfinding and Hierarchical Annotated A* Search. Daniel Harabor on May 5, 2009](http://aigamedev.com/open/tutorial/clearance-based-pathfinding/)
 - [Using Potential Fields in a Real-time Strategy Game Scenario. Johan Hagelbäck on January 31, 2009](http://aigamedev.com/open/tutorials/potential-fields/) (and included references)
 
 # how pathfinding works
+Different game scenarios require different pathfinding solutions; for example if the navigatable area consists of a finite set of discrete locations (for example the squares on a chess board) a (relatively) simple graph-based solution would be suitable to calculate paths across the game world. However if the game world is larger and more complex (for example in a real time strategy game) the navigatable area may include an incredibly large position space that agents may position themselves within.
+
+The most simple solution is to treat every point as a node in a graph, and calculate the optimal path for each _(origin, destination)_ as necessary. This solution quickly becomes inefficient however, both in the space and time complexity dimensions. //TODO add example using A*
+
+Navigation meshes (or navmeshes) address this by grouping sets of navigatable points into convex zones called _meshes_ (or mesh in singular form). The graph of a set of connected navmeshes is much simpler than the corresponding graph of every navigatable points in those navmeshes and if there are no obstacles inside a navmesh agents can follow a line across navmeshes from the point of mesh ingress to the mesh edge connecting the current navmesh to the next destination mesh .//TODO add images of the top level search (across navmeshes) and the straight line traversal across navmeshes.
+
+Complications arise when the game environment is populated by many agents who may not be able to fill the same positions as other agents concurrently. Additionally the positioning of immovable obstacles (such as crates or immobile vehicles) may block straight line paths which means following straight line paths is unviable. There are several solutions to this:
+
+- Populate each mesh with a subgraph of navigatable points that agents can inspect if their path is blocked and perform an additional A* search on this subgraph
+- Populate each mesh with a grid of potential field cells. Potential fields contain cells describing the cell's 'charge'; this charge is calculated based on it's distance to the destination point and it's proximity to undesirable/desirable objects (such as other agents, walls, or dangers).
+
+
+//TODO
+
 ## Mesh basics
 A 3D game world is segmented into 3D meshes representing any 3D unit of that world; for example you could have meshes representing:
 - A floor segment
