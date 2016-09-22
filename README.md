@@ -2,7 +2,7 @@
 A hierarchical pathfinding system combining multiple levels of A*, navmesh navigation, and potential fields.
 Currently this repo contains my progress towards a proof of concept implemented in Processing (due to ease of visualisation). Javascript and pseudocode implementations will be available once the Processing version is up to my standard.
 
-# how it works
+# how pathfinding works
 ## Mesh basics
 A 3D game world is segmented into 3D meshes representing any 3D unit of that world; for example you could have meshes representing:
 - A floor segment
@@ -34,3 +34,16 @@ The node gives the agent the doorway connection the edge represents. The agent f
 ### what about if the destination room isn't directly adjacent?
 
 ### what about if there's other agents in the way?
+
+# how _this_ pathfinder works
+This pathfinder enables navmesh-based navigation across a world with support for moving obstacles (such as other agents or moving props), crowding, and for location based play-bonuses (such as in the video games _Dawn of War_ and _Company of Heroes_).
+
+## the short version
+- A set of triangular meshes is defined
+- Bounding boxes are used to determine adjacent mesh candidates (denoted by the set _AC_; adjacency candidates)
+- A grid of cells is generated over each mesh. This will be the basis for the potential field later.
+- Any cells that may overlap with other meshes are checked against the _AC_ to determine if they constitute points of inter-mesh navigation
+- These cell overlaps are used to calculate exit line segments and are grouped together in a structure
+- Potential field values are generated for each cell to every adjacent mesh to the mesh the cell belongs to (factoring in world charge generators, such as dangerous areas, blocked paths, desirable areas, etc)
+- //TODO
+- 
