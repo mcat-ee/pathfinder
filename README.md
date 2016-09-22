@@ -19,6 +19,8 @@ Complications arise when the game environment is populated by many agents who ma
 - Populate each mesh with a subgraph of navigatable points that agents can inspect if their path is blocked and perform an additional A* search on this subgraph
 - Populate each mesh with a grid of potential field cells. Potential fields contain cells describing the cell's 'charge'; this charge is calculated based on it's distance to the destination point and it's proximity to undesirable/desirable objects (such as other agents, walls, or dangers).
 
+These solutions are quite similar in intent, however the potential field based solution offers a significant benefit over the subgraph approach. Cells in potential fields can contain vectors describing 'next step' paths (for example a cell _(0,0)_ might give an agent with the destination _(2,0)_ a vector _(1,0)_ to describe the best next step from itself). Each potential field cell could be populated with a 'best next step' for each of the entrance edges for the navmeshes neighbouring the cells parent navmesh, so in the event of a block it could offer an optimal series of next steps. 
+
 
 //TODO
 
