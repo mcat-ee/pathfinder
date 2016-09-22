@@ -2,6 +2,9 @@
 A hierarchical pathfinding system combining multiple levels of A*, navmesh navigation, and potential fields.
 Currently this repo contains my progress towards a proof of concept implemented in Processing (due to ease of visualisation). Javascript and pseudocode implementations will be available once the Processing version is up to my standard.
 
+# related work
+[Clearance-based Pathfinding and Hierarchical Annotated A* Search. Daniel Harabor on May 5, 2009](http://aigamedev.com/open/tutorial/clearance-based-pathfinding/)
+[Using Potential Fields in a Real-time Strategy Game Scenario. Johan Hagelbäck on January 31, 2009](http://aigamedev.com/open/tutorials/potential-fields/) (and included references)
 # how pathfinding works
 ## Mesh basics
 A 3D game world is segmented into 3D meshes representing any 3D unit of that world; for example you could have meshes representing:
